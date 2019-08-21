@@ -1,43 +1,34 @@
-provider "aws" {
-  alias  = "us-east-1"
-  region = "us-east-1"
-}
-
-provider "aws" {
-  alias  = "us-west-2"
-  region = "us-west-2"
-}
-
 resource "aws_dynamodb_table" "us-east-1" {
+
   provider = "aws.us-east-1"
 
-  hash_key         = "myAttribute"
-  name             = "myTable"
+  hash_key         = "${var.hash_key}"
+  name             = "${var.name}"
   stream_enabled   = true
   stream_view_type = "NEW_AND_OLD_IMAGES"
   read_capacity    = 1
   write_capacity   = 1
 
   attribute {
-    name = "myAttribute"
-    type = "S"
+    name = "${var.attribute_name}"
+    type = "${var.attribute_type}"
   }
 }
 
 resource "aws_dynamodb_table" "us-west-2" {
   provider = "aws.us-west-2"
 
-  hash_key         = "myAttribute"
-  name             = "myTable"
+  hash_key         = "${var.hash_key}"
+  name             = "${var.name}"
   stream_enabled   = true
   stream_view_type = "NEW_AND_OLD_IMAGES"
   read_capacity    = 1
   write_capacity   = 1
-
   attribute {
-    name = "myAttribute"
-    type = "S"
+    name = "${var.attribute_name}"
+    type = "${var.attribute_type}"
   }
+
 }
 
 resource "aws_dynamodb_global_table" "myTable" {
